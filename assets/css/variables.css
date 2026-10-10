@@ -1,0 +1,194 @@
+/* ==========================================================
+   LUMIÈRE DESIGN SYSTEM
+   ========================================================== */
+
+:root {
+
+    /* ======================================================
+       COLORS
+       ====================================================== */
+
+    --color-bg: #090909;
+    --color-surface: #111111;
+    --color-surface-light: #181818;
+
+    --color-primary: #D4AF37;
+    --color-primary-light: #E5C76B;
+    --color-primary-dark: #A8872A;
+
+    --color-text: #FFFFFF;
+    --color-text-muted: #B5B5B5;
+    --color-text-soft: #8A8A8A;
+
+    --color-border: rgba(255,255,255,.08);
+
+    --glass-bg: rgba(255,255,255,.04);
+    --glass-border: rgba(255,255,255,.08);
+
+    --overlay-dark: rgba(0,0,0,.55);
+    --overlay-heavy: rgba(0,0,0,.72);
+
+    --gradient-gold:
+        linear-gradient(
+            135deg,
+            #A8872A,
+            #D4AF37,
+            #F2DC93
+        );
+
+    --gradient-dark:
+        linear-gradient(
+            180deg,
+            #090909,
+            #101010
+        );
+
+    /* ======================================================
+       TYPOGRAPHY
+       ====================================================== */
+
+    --font-heading:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    --font-body:
+        "Inter",
+        "Segoe UI",
+        sans-serif;
+
+    /* Hero */
+
+    --fs-display: clamp(4rem, 9vw, 8.5rem);
+
+    --fs-h1: clamp(3rem, 6vw, 6rem);
+
+    --fs-h2: clamp(2.4rem, 5vw, 4rem);
+
+    --fs-h3: clamp(1.8rem, 3vw, 2.8rem);
+
+    --fs-h4: 1.4rem;
+
+    --fs-body-lg: 1.25rem;
+
+    --fs-body: 1rem;
+
+    --fs-small: .9rem;
+
+    --fs-label: .75rem;
+
+    /* ======================================================
+       FONT WEIGHT
+       ====================================================== */
+
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    /* ======================================================
+       LETTER SPACING
+       ====================================================== */
+
+    --ls-tight: -.04em;
+
+    --ls-normal: 0;
+
+    --ls-wide: .08em;
+
+    --ls-extra: .22em;
+
+    /* ======================================================
+       SPACING SYSTEM (8pt)
+       ====================================================== */
+
+    --space-1: .25rem;
+    --space-2: .5rem;
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --space-9: 6rem;
+    --space-10: 8rem;
+    --space-11: 10rem;
+    --space-12: 12rem;
+
+    /* ======================================================
+       CONTAINER
+       ====================================================== */
+
+    --container-width: 1400px;
+    --container-padding: 6vw;
+
+    --section-padding: 8rem;
+    --section-gap: 6rem;
+
+    /* ======================================================
+       BORDER RADIUS
+       ====================================================== */
+
+    --radius-xs: 6px;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 36px;
+    --radius-round: 999px;
+
+    /* ======================================================
+       SHADOWS
+       ====================================================== */
+
+    --shadow-soft:
+        0 15px 35px rgba(0,0,0,.25);
+
+    --shadow-medium:
+        0 30px 60px rgba(0,0,0,.35);
+
+    --shadow-gold:
+        0 0 30px rgba(212,175,55,.18);
+
+    /* ======================================================
+       BLUR
+       ====================================================== */
+
+    --blur-small: 8px;
+    --blur-medium: 16px;
+    --blur-large: 30px;
+
+    /* ======================================================
+       TRANSITIONS
+       ====================================================== */
+
+    --ease:
+        cubic-bezier(.22,.61,.36,1);
+
+    --ease-smooth:
+        cubic-bezier(.16,1,.3,1);
+
+    --ease-bounce:
+        cubic-bezier(.34,1.56,.64,1);
+
+    --transition-fast:
+        .25s var(--ease);
+
+    --transition:
+        .45s var(--ease);
+
+    --transition-slow:
+        .8s var(--ease-smooth);
+
+    /* ======================================================
+       Z INDEX
+       ====================================================== */
+
+    --z-loader: 99999;
+    --z-cursor: 9999;
+    --z-navbar: 9000;
+    --z-lightbox: 9500;
+    --z-overlay: 8000;
+    --z-dropdown: 8500;
+
+}

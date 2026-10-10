@@ -1,0 +1,427 @@
+/* ==========================================================
+   ABOUT
+   LUMIÈRE
+========================================================== */
+
+.about{
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255,255,255,.015),
+            transparent
+        );
+
+}
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.about .container{
+
+    display:grid;
+
+    grid-template-columns:
+        1.05fr
+        .95fr;
+
+    gap:min(8vw,7rem);
+
+    align-items:center;
+
+}
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+.about-text{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.about-text h2{
+
+    margin-bottom:2rem;
+
+    max-width:700px;
+
+}
+
+.about-text p{
+
+    font-size:1.08rem;
+
+    line-height:1.9;
+
+    margin-bottom:2rem;
+
+}
+
+/* Decorative line */
+
+.about-text::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-70px;
+    top:18px;
+
+    width:45px;
+    height:1px;
+
+    background:var(--color-primary);
+
+    opacity:.7;
+
+}
+
+/* ==========================================================
+   IMAGE LAYOUT
+========================================================== */
+
+.about-images{
+
+    position:relative;
+
+    height:720px;
+
+}
+
+.about-images .image{
+
+    position:absolute;
+
+    overflow:hidden;
+
+    border-radius:26px;
+
+    box-shadow:
+        var(--shadow-medium);
+
+}
+
+.about-images .large{
+
+    width:72%;
+
+    height:520px;
+
+    left:0;
+    top:0;
+
+}
+
+.about-images .small{
+
+    width:52%;
+
+    height:340px;
+
+    right:0;
+    bottom:0;
+
+    border:8px solid var(--color-bg);
+
+}
+
+/* Gold frame */
+
+.about-images .large::after,
+.about-images .small::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:18px;
+
+    border:1px solid rgba(212,175,55,.18);
+
+    border-radius:inherit;
+
+    pointer-events:none;
+
+}
+
+/* ==========================================================
+   IMAGE HOVER
+========================================================== */
+
+.about-images .image{
+
+    transition:
+        transform .7s var(--ease),
+        box-shadow .7s var(--ease);
+
+}
+
+.about-images .image:hover{
+
+    transform:
+        translateY(-12px);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.45),
+        0 0 25px rgba(212,175,55,.12);
+
+}
+
+/* ==========================================================
+   FLOATING ACCENT
+========================================================== */
+
+.about::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:520px;
+    height:520px;
+
+    right:-220px;
+    top:-120px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            rgba(212,175,55,.08),
+            transparent 70%
+        );
+
+    filter:blur(80px);
+
+}
+
+/* ==========================================================
+   STATS
+   (Future HTML)
+========================================================== */
+
+.about-stats{
+
+    display:flex;
+
+    gap:3rem;
+
+    margin-top:4rem;
+
+}
+
+.stat{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.35rem;
+
+}
+
+.stat h3{
+
+    font-size:3rem;
+
+    color:var(--color-primary);
+
+    line-height:1;
+
+}
+
+.stat span{
+
+    color:var(--color-text-muted);
+
+    text-transform:uppercase;
+
+    letter-spacing:.18em;
+
+    font-size:.78rem;
+
+}
+
+/* ==========================================================
+   SIGNATURE
+========================================================== */
+
+.signature{
+
+    margin-top:3rem;
+
+    font-family:var(--font-heading);
+
+    font-size:2rem;
+
+    color:rgba(212,175,55,.9);
+
+    opacity:.9;
+
+}
+
+/* ==========================================================
+   IMAGE REVEAL
+========================================================== */
+
+.about-images .image{
+
+    clip-path:
+        inset(0 0 100% 0);
+
+    opacity:0;
+
+}
+
+.about.active .image{
+
+    clip-path:
+        inset(0);
+
+    opacity:1;
+
+    transition:
+        clip-path 1.4s cubic-bezier(.22,1,.36,1),
+        opacity 1.4s ease;
+
+}
+
+.about.active .large{
+
+    transition-delay:.2s;
+
+}
+
+.about.active .small{
+
+    transition-delay:.45s;
+
+}
+
+/* ==========================================================
+   TEXT REVEAL
+========================================================== */
+
+.about-text>*{
+
+    opacity:0;
+
+    transform:
+        translateY(45px);
+
+}
+
+.about.active .about-text>*{
+
+    opacity:1;
+
+    transform:none;
+
+    transition:
+        .9s cubic-bezier(.22,1,.36,1);
+
+}
+
+.about.active .about-text>*:nth-child(1){transition-delay:.15s;}
+.about.active .about-text>*:nth-child(2){transition-delay:.30s;}
+.about.active .about-text>*:nth-child(3){transition-delay:.45s;}
+.about.active .about-text>*:nth-child(4){transition-delay:.60s;}
+.about.active .about-text>*:nth-child(5){transition-delay:.75s;}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width:1100px){
+
+    .about .container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .about-images{
+
+        height:600px;
+
+        max-width:700px;
+
+        margin:auto;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .about-images{
+
+        height:520px;
+
+    }
+
+    .about-images .large{
+
+        width:100%;
+        height:360px;
+
+    }
+
+    .about-images .small{
+
+        width:60%;
+        height:220px;
+
+    }
+
+    .about-stats{
+
+        flex-wrap:wrap;
+
+        gap:2rem;
+
+    }
+
+}
+
+@media (max-width:540px){
+
+    .about-images{
+
+        height:420px;
+
+    }
+
+    .about-images .large{
+
+        height:290px;
+
+    }
+
+    .about-images .small{
+
+        width:70%;
+        height:170px;
+
+        border-width:5px;
+
+    }
+
+    .about-text::before{
+
+        display:none;
+
+    }
+
+}

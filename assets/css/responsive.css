@@ -1,0 +1,366 @@
+/* ==========================================================
+   RESPONSIVE
+   LUMIÈRE
+========================================================== */
+
+/* ==========================================================
+   1600px+
+========================================================== */
+
+@media (min-width:1600px){
+
+    :root{
+
+        --container-width:1600px;
+
+        --section-padding:10rem;
+
+    }
+
+}
+
+/* ==========================================================
+   1400px
+========================================================== */
+
+@media (max-width:1400px){
+
+    :root{
+
+        --container-padding:5vw;
+
+    }
+
+}
+
+/* ==========================================================
+   1200px
+========================================================== */
+
+@media (max-width:1200px){
+
+    section{
+
+        padding-block:7rem;
+
+    }
+
+    .container{
+
+        width:min(94%,1200px);
+
+    }
+
+}
+
+/* ==========================================================
+   1024px
+========================================================== */
+
+@media (max-width:1024px){
+
+    h1{
+
+        font-size:clamp(3.8rem,8vw,5.8rem);
+
+    }
+
+    h2{
+
+        font-size:clamp(2.5rem,5vw,3.5rem);
+
+    }
+
+    .hero-buttons{
+
+        gap:1rem;
+
+    }
+
+}
+
+/* ==========================================================
+   TABLETS
+========================================================== */
+
+@media (max-width:992px){
+
+    :root{
+
+        --section-padding:6rem;
+
+    }
+
+    .section-heading{
+
+        margin-bottom:4rem;
+
+    }
+
+    .btn{
+
+        min-width:170px;
+
+    }
+
+    .hero{
+
+        text-align:center;
+
+    }
+
+}
+
+/* ==========================================================
+   768px
+========================================================== */
+
+@media (max-width:768px){
+
+    :root{
+
+        --section-padding:5rem;
+
+        --container-padding:1.5rem;
+
+    }
+
+    h1{
+
+        line-height:1;
+
+    }
+
+    h2{
+
+        line-height:1.05;
+
+    }
+
+    .section-heading{
+
+        margin-bottom:3rem;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+        min-width:unset;
+
+    }
+
+    .glass{
+
+        backdrop-filter:blur(16px);
+
+    }
+
+}
+
+/* ==========================================================
+   640px
+========================================================== */
+
+@media (max-width:640px){
+
+    .container{
+
+        width:min(92%,100%);
+
+    }
+
+    .hero{
+
+        min-height:100svh;
+
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .hero-tag{
+
+        font-size:.72rem;
+
+        letter-spacing:.2em;
+
+    }
+
+    .section-label{
+
+        letter-spacing:.18em;
+
+    }
+
+}
+
+/* ==========================================================
+   480px
+========================================================== */
+
+@media (max-width:480px){
+
+    :root{
+
+        --section-padding:4rem;
+
+    }
+
+    body{
+
+        font-size:.95rem;
+
+    }
+
+    h1{
+
+        font-size:clamp(2.8rem,11vw,4rem);
+
+    }
+
+    h2{
+
+        font-size:clamp(2rem,8vw,3rem);
+
+    }
+
+    h3{
+
+        font-size:1.6rem;
+
+    }
+
+    .hero-content{
+
+        padding-inline:.5rem;
+
+    }
+
+    .scroll-indicator{
+
+        display:none;
+
+    }
+
+    .btn{
+
+        height:56px;
+
+        font-size:.9rem;
+
+    }
+
+}
+
+/* ==========================================================
+   SMALL PHONES
+========================================================== */
+
+@media (max-width:360px){
+
+    body{
+
+        font-size:.92rem;
+
+    }
+
+    h1{
+
+        font-size:2.5rem;
+
+    }
+
+    h2{
+
+        font-size:1.8rem;
+
+    }
+
+}
+
+/* ==========================================================
+   LANDSCAPE MOBILE
+========================================================== */
+
+@media (max-height:600px) and (orientation:landscape){
+
+    .hero{
+
+        min-height:120vh;
+
+    }
+
+    .scroll-indicator{
+
+        display:none;
+
+    }
+
+}
+
+/* ==========================================================
+   HOVER DEVICES ONLY
+========================================================== */
+
+@media (hover:hover){
+
+    .menu-card:hover,
+    .gallery-item:hover,
+    .review-card:hover,
+    .award:hover{
+
+        will-change:transform;
+
+    }
+
+}
+
+/* ==========================================================
+   TOUCH DEVICES
+========================================================== */
+
+@media (hover:none){
+
+    .menu-card:hover,
+    .gallery-item:hover,
+    .review-card:hover{
+
+        transform:none;
+
+    }
+
+    .cursor,
+    .cursor-dot{
+
+        display:none !important;
+
+    }
+
+}
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion:reduce){
+
+    html{
+
+        scroll-behavior:auto;
+
+    }
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+    }
+
+}

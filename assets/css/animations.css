@@ -1,0 +1,559 @@
+/* ==========================================================
+   ANIMATIONS
+   LUMIÈRE MOTION SYSTEM
+========================================================== */
+
+/* ==========================================================
+   FADE
+========================================================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(60px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+@keyframes fadeDown{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(-60px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+@keyframes fadeLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(-70px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+@keyframes fadeRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateX(70px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+/* ==========================================================
+   SCALE
+========================================================== */
+
+@keyframes scaleIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            scale(.85);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+@keyframes zoomOut{
+
+    from{
+
+        transform:
+            scale(1.15);
+
+    }
+
+    to{
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+/* ==========================================================
+   ROTATION
+========================================================== */
+
+@keyframes rotateSlow{
+
+    from{
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to{
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================================
+   FLOAT
+========================================================== */
+
+@keyframes float{
+
+    0%{
+
+        transform:
+            translateY(0);
+
+    }
+
+    50%{
+
+        transform:
+            translateY(-10px);
+
+    }
+
+    100%{
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+.float{
+
+    animation:
+        float 6s ease-in-out infinite;
+
+}
+
+/* ==========================================================
+   PULSE
+========================================================== */
+
+@keyframes pulse{
+
+    0%{
+
+        transform:
+            scale(1);
+
+    }
+
+    50%{
+
+        transform:
+            scale(1.05);
+
+    }
+
+    100%{
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+/* ==========================================================
+   SHIMMER
+========================================================== */
+
+@keyframes shimmer{
+
+    from{
+
+        background-position:
+            -300% 0;
+
+    }
+
+    to{
+
+        background-position:
+            300% 0;
+
+    }
+
+}
+
+.shimmer{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.08),
+            transparent
+        );
+
+    background-size:
+        300% 100%;
+
+    animation:
+        shimmer 3s linear infinite;
+
+}
+
+/* ==========================================================
+   GLOW
+========================================================== */
+
+@keyframes glow{
+
+    0%{
+
+        box-shadow:
+            0 0 0 rgba(212,175,55,0);
+
+    }
+
+    50%{
+
+        box-shadow:
+            0 0 35px rgba(212,175,55,.18);
+
+    }
+
+    100%{
+
+        box-shadow:
+            0 0 0 rgba(212,175,55,0);
+
+    }
+
+}
+
+/* ==========================================================
+   RIPPLE
+========================================================== */
+
+@keyframes ripple{
+
+    from{
+
+        transform:
+            scale(0);
+
+        opacity:.4;
+
+    }
+
+    to{
+
+        transform:
+            scale(5);
+
+        opacity:0;
+
+    }
+
+}
+
+/* ==========================================================
+   MAGNETIC
+========================================================== */
+
+.magnetic{
+
+    transition:
+
+        transform .25s cubic-bezier(.22,1,.36,1);
+
+}
+
+/* ==========================================================
+   SPLIT TEXT
+========================================================== */
+
+.split-line{
+
+    display:block;
+
+    overflow:hidden;
+
+}
+
+.split-word{
+
+    display:inline-block;
+
+    transform:
+        translateY(120%);
+
+    opacity:0;
+
+    will-change:
+        transform, opacity;
+
+}
+
+/* ==========================================================
+   IMAGE REVEAL
+========================================================== */
+
+.image-reveal{
+
+    clip-path:
+        inset(0 0 100% 0);
+
+    transition:
+
+        clip-path 1.2s cubic-bezier(.22,1,.36,1);
+
+}
+
+.image-reveal.show{
+
+    clip-path:
+        inset(0);
+
+}
+
+/* ==========================================================
+   PARALLAX
+========================================================== */
+
+.parallax{
+
+    will-change:transform;
+
+    transform:
+        translate3d(0,0,0);
+
+}
+
+/* ==========================================================
+   BUTTON RIPPLE
+========================================================== */
+
+.ripple{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    background:
+        rgba(255,255,255,.28);
+
+    transform:
+        scale(0);
+
+    animation:
+        ripple
+        .65s linear;
+
+}
+
+/* ==========================================================
+   CURSOR HOVER
+========================================================== */
+
+.cursor-hover{
+
+    transform:
+        scale(1.08);
+
+}
+
+/* ==========================================================
+   NOISE
+========================================================== */
+
+@keyframes grain{
+
+    0%{
+
+        transform:
+            translate(0,0);
+
+    }
+
+    25%{
+
+        transform:
+            translate(-2%,-1%);
+
+    }
+
+    50%{
+
+        transform:
+            translate(1%,2%);
+
+    }
+
+    75%{
+
+        transform:
+            translate(2%,-2%);
+
+    }
+
+    100%{
+
+        transform:
+            translate(0,0);
+
+    }
+
+}
+
+.noise{
+
+    animation:
+        grain .35s steps(2) infinite;
+
+}
+
+/* ==========================================================
+   SCROLL PROGRESS
+========================================================== */
+
+.progress-bar{
+
+    transform-origin:left;
+
+    will-change:width;
+
+}
+
+/* ==========================================================
+   REVEAL UTILITIES
+========================================================== */
+
+[data-reveal]{
+
+    opacity:0;
+
+    transform:
+        translateY(50px);
+
+    transition:
+        opacity .9s cubic-bezier(.22,1,.36,1),
+        transform .9s cubic-bezier(.22,1,.36,1);
+
+}
+
+[data-reveal].show{
+
+    opacity:1;
+
+    transform:none;
+
+}
+
+/* ==========================================================
+   STAGGER
+========================================================== */
+
+[data-delay="1"]{transition-delay:.1s;}
+[data-delay="2"]{transition-delay:.2s;}
+[data-delay="3"]{transition-delay:.3s;}
+[data-delay="4"]{transition-delay:.4s;}
+[data-delay="5"]{transition-delay:.5s;}
+[data-delay="6"]{transition-delay:.6s;}
+[data-delay="7"]{transition-delay:.7s;}
+[data-delay="8"]{transition-delay:.8s;}
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion: reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+    }
+
+}

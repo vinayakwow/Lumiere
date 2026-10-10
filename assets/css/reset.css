@@ -1,0 +1,239 @@
+/* ==========================================================
+   RESET
+   LUMIÈRE
+   ========================================================== */
+
+/* Box sizing */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default spacing */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Better scrolling */
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Body */
+
+body {
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Images */
+
+img,
+picture,
+svg,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+/* Media */
+
+img {
+    height: auto;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+/* Form Elements */
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+/* Buttons */
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Textareas */
+
+textarea {
+    resize: vertical;
+}
+
+/* Links */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Lists */
+
+ul,
+ol {
+    list-style: none;
+}
+
+/* Tables */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Quotes */
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: "";
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Paragraphs */
+
+p {
+    overflow-wrap: break-word;
+}
+
+/* Long words */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span {
+    word-break: normal;
+}
+
+/* Inputs */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+/* Placeholder */
+
+::placeholder {
+    opacity: 1;
+}
+
+/* Focus */
+
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+/* Selection */
+
+::selection {
+    background: var(--color-primary);
+    color: var(--color-bg);
+}
+
+/* Horizontal Rule */
+
+hr {
+    border: 0;
+}
+
+/* Hidden */
+
+[hidden] {
+    display: none !important;
+}
+
+/* Disabled */
+
+button:disabled,
+input:disabled {
+    cursor: not-allowed;
+}
+
+/* Prevent layout shift on images */
+
+img {
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Better touch */
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Reduce motion */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}

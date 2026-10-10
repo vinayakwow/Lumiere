@@ -1,0 +1,468 @@
+/* ==========================================================
+   GLOBAL
+   LUMIÈRE
+========================================================== */
+
+/* Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+body {
+
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    line-height: 1.7;
+
+    overflow-x: hidden;
+
+}
+
+/* ==========================================================
+   TYPOGRAPHY
+========================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+    font-family: var(--font-heading);
+    font-weight: 600;
+
+    letter-spacing: var(--ls-tight);
+
+    line-height: .95;
+
+}
+
+h1{
+
+    font-size: var(--fs-display);
+
+}
+
+h2{
+
+    font-size: var(--fs-h2);
+
+}
+
+h3{
+
+    font-size: var(--fs-h3);
+
+}
+
+p{
+
+    color: var(--color-text-muted);
+
+    max-width: 680px;
+
+}
+
+.section-label{
+
+    color: var(--color-primary);
+
+    text-transform: uppercase;
+
+    letter-spacing: .35rem;
+
+    font-size: .8rem;
+
+    margin-bottom: 1rem;
+
+}
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.container{
+
+    width: min(
+        92%,
+        var(--container-width)
+    );
+
+    margin-inline: auto;
+
+}
+
+/* ==========================================================
+   SECTION
+========================================================== */
+
+section{
+
+    position: relative;
+
+    padding-block: var(--section-padding);
+
+}
+
+.section-heading{
+
+    text-align: center;
+
+    margin-bottom: 5rem;
+
+}
+
+.section-heading h2{
+
+    margin-top: 1rem;
+
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.btn{
+
+    position: relative;
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: .75rem;
+
+    min-width: 180px;
+
+    padding:
+
+        1rem
+        2rem;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    transition: var(--transition);
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+}
+
+.btn-primary{
+
+    background: var(--gradient-gold);
+
+    color: #111;
+
+}
+
+.btn-primary:hover{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        var(--shadow-gold);
+
+}
+
+.btn-secondary{
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.15);
+
+    backdrop-filter:
+
+        blur(14px);
+
+}
+
+.btn-secondary:hover{
+
+    background:
+
+        rgba(255,255,255,.06);
+
+}
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.card{
+
+    background:
+
+        var(--color-surface);
+
+    border:
+
+        1px solid
+        var(--color-border);
+
+    border-radius:
+
+        var(--radius-lg);
+
+    transition:
+
+        var(--transition);
+
+}
+
+.card:hover{
+
+    transform:
+
+        translateY(-10px);
+
+}
+
+/* ==========================================================
+   IMAGE
+========================================================== */
+
+.image{
+
+    overflow: hidden;
+
+    border-radius:
+
+        var(--radius-lg);
+
+}
+
+.image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+
+        1.2s ease;
+
+}
+
+.image:hover img{
+
+    transform:
+
+        scale(1.08);
+
+}
+
+/* ==========================================================
+   GLASS
+========================================================== */
+
+.glass{
+
+    background:
+
+        var(--glass-bg);
+
+    backdrop-filter:
+
+        blur(20px);
+
+    border:
+
+        1px solid
+
+        var(--glass-border);
+
+}
+
+/* ==========================================================
+   REVEAL
+========================================================== */
+
+.reveal{
+
+    opacity:0;
+
+    transform:
+
+        translateY(70px);
+
+}
+
+.reveal.active{
+
+    opacity:1;
+
+    transform:none;
+
+    transition:
+
+        opacity .9s ease,
+        transform .9s ease;
+
+}
+
+/* ==========================================================
+   DIVIDERS
+========================================================== */
+
+.divider{
+
+    width:80px;
+
+    height:1px;
+
+    background:
+
+        var(--color-primary);
+
+    margin:
+
+        2rem auto;
+
+}
+
+/* ==========================================================
+   NOISE
+========================================================== */
+
+.noise{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:2;
+
+    opacity:.04;
+
+    background-image:
+        url("../images/noise.png");
+
+}
+
+/* ==========================================================
+   PROGRESS BAR
+========================================================== */
+
+.progress-bar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:0;
+
+    height:3px;
+
+    background:
+
+        var(--gradient-gold);
+
+    z-index:
+
+        var(--z-navbar);
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#090909;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+
+        #444;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:
+
+        var(--color-primary);
+
+}
+
+/* Firefox */
+
+*{
+
+    scrollbar-width:thin;
+
+    scrollbar-color:
+
+        var(--color-primary)
+
+        var(--color-bg);
+
+}
+
+/* ==========================================================
+   UTILITIES
+========================================================== */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+.flex{
+
+    display:flex;
+
+}
+
+.grid{
+
+    display:grid;
+
+}
+
+.full-height{
+
+    min-height:100vh;
+
+}

@@ -1,0 +1,414 @@
+/* ==========================================================
+   RESERVATION
+   LUMIÈRE
+========================================================== */
+
+.reservation{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding-block:calc(var(--section-padding) + 2rem);
+
+}
+
+/* ==========================================================
+   BACKGROUND
+========================================================== */
+
+.reservation::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(212,175,55,.05),
+            transparent 70%
+        );
+
+    pointer-events:none;
+
+}
+
+.reservation::after{
+
+    content:"RESERVE";
+
+    position:absolute;
+
+    top:2rem;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-family:var(--font-heading);
+
+    font-size:clamp(7rem,16vw,18rem);
+
+    letter-spacing:.18em;
+
+    color:rgba(255,255,255,.02);
+
+    white-space:nowrap;
+
+    pointer-events:none;
+
+}
+
+/* ==========================================================
+   WRAPPER
+========================================================== */
+
+.reservation-wrapper{
+
+    width:min(1200px,92%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:.85fr 1.15fr;
+
+    gap:5rem;
+
+    align-items:center;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.reservation-content h2{
+
+    margin-bottom:1.5rem;
+
+}
+
+.reservation-content p{
+
+    font-size:1.08rem;
+
+    line-height:1.9;
+
+    margin-bottom:3rem;
+
+}
+
+/* ==========================================================
+   FEATURES
+========================================================== */
+
+.reservation-features{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.4rem;
+
+}
+
+.reservation-feature{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+}
+
+.reservation-feature-icon{
+
+    width:54px;
+    height:54px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:50%;
+
+    background:rgba(212,175,55,.08);
+
+    border:1px solid rgba(212,175,55,.18);
+
+    color:var(--color-primary);
+
+}
+
+.reservation-feature h4{
+
+    font-size:1.1rem;
+
+    margin-bottom:.2rem;
+
+}
+
+.reservation-feature span{
+
+    color:var(--color-text-muted);
+
+    font-size:.92rem;
+
+}
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.reservation form{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:1.5rem;
+
+    padding:3rem;
+
+    border-radius:32px;
+
+    background:rgba(255,255,255,.035);
+
+    backdrop-filter:blur(24px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35);
+
+}
+
+/* ==========================================================
+   INPUT GROUP
+========================================================== */
+
+.input-group{
+
+    position:relative;
+
+}
+
+.input-group.full{
+
+    grid-column:1/-1;
+
+}
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+
+.reservation input,
+.reservation textarea,
+.reservation select{
+
+    width:100%;
+
+    padding:1rem 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.12);
+
+    transition:
+        border-color .35s var(--ease);
+
+}
+
+.reservation textarea{
+
+    min-height:120px;
+
+    resize:vertical;
+
+}
+
+.reservation input:focus,
+.reservation textarea:focus,
+.reservation select:focus{
+
+    border-color:var(--color-primary);
+
+}
+
+/* ==========================================================
+   FLOATING LABEL
+========================================================== */
+
+.input-group label{
+
+    position:absolute;
+
+    top:1rem;
+    left:0;
+
+    color:var(--color-text-muted);
+
+    transition:
+        .35s var(--ease);
+
+    pointer-events:none;
+
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label{
+
+    top:-.8rem;
+
+    font-size:.72rem;
+
+    color:var(--color-primary);
+
+    letter-spacing:.12em;
+
+}
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.reservation button{
+
+    grid-column:1/-1;
+
+    margin-top:1rem;
+
+    height:60px;
+
+    border-radius:999px;
+
+    background:var(--gradient-gold);
+
+    color:#111;
+
+    font-weight:600;
+
+    transition:
+        transform .4s var(--ease),
+        box-shadow .4s var(--ease);
+
+}
+
+.reservation button:hover{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        var(--shadow-gold);
+
+}
+
+/* ==========================================================
+   GLASS SHINE
+========================================================== */
+
+.reservation form::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:inherit;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.06),
+            transparent
+        );
+
+    transform:
+        translateX(-120%);
+
+    transition:1.3s;
+
+}
+
+.reservation form:hover::before{
+
+    transform:
+        translateX(120%);
+
+}
+
+/* ==========================================================
+   REVEAL
+========================================================== */
+
+.reservation-content,
+.reservation form{
+
+    opacity:0;
+
+    transform:translateY(60px);
+
+}
+
+.reservation.active .reservation-content,
+.reservation.active form{
+
+    opacity:1;
+
+    transform:none;
+
+    transition:
+        opacity .9s ease,
+        transform .9s cubic-bezier(.22,1,.36,1);
+
+}
+
+.reservation.active form{
+
+    transition-delay:.2s;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width:1100px){
+
+    .reservation-wrapper{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media (max-width:700px){
+
+    .reservation form{
+
+        grid-template-columns:1fr;
+
+        padding:2rem;
+
+    }
+
+    .input-group.full{
+
+        grid-column:auto;
+
+    }
+
+}
