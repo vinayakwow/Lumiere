@@ -1,122 +1,73 @@
-/**
- * ==========================================================
- * LUMIÈRE
- * Loader Module
- * ==========================================================
- */
-
 export default class Loader {
-
     constructor(app) {
-
         this.app = app;
-
         this.config = app.config.loader;
         this.state = app.state.loader;
-
         this.loader = document.querySelector(".loader");
         this.hero = document.querySelector(".hero");
-
+        this.timer = null;
+        this.finished = false;
     }
 
-    /* ======================================================
-   INIT
-====================================================== */
+    init() {
+        if (!this.loader) {
+            this.complete();
+            return;
+        }
 
-init() {
-
-    if (!this.loader) return;
-
-    setTimeout(() => {
-
-        this.loader.remove();
-
-        document.body.style.overflow = "";
-
-    }, 1000);
-
-}
-
-    /* ======================================================
-       START
-    ====================================================== */
-
-    start() {
-
-        setTimeout(() => {
-
-            this.finish();
-
-        }, this.config.duration);
-
+        this.lockScroll();
+        const delay = this.app.state.animation.reducedMotion
+            ? 0
+            : Math.max(0, this.config.duration);
+        this.timer = setTimeout(() => this.finish(), delay);
     }
-
-    /* ======================================================
-       FINISH
-    ====================================================== */
 
     finish() {
-
-        this.loader.classList.add("hide");
-
+        if (this.finished) return;
+        this.finished = true;
         this.state.finished = true;
         this.state.animating = false;
-
         this.app.state.app.loading = false;
         this.app.state.app.ready = true;
 
         if (this.hero) {
-
-            requestAnimationFrame(() => {
-
-                this.hero.classList.add("ready");
-
-            });
-
+            this.hero.classList.add("ready");
+        }
+        if (!this.loader) {
+            this.complete();
+            return;
         }
 
-        setTimeout(() => {
-
-            this.loader.remove();
-
-            this.unlockScroll();
-
-            this.app.events.emit("loader:finished");
-
-            this.dispatchReadyEvent();
-
-        }, this.config.fadeDuration);
-
+        this.loader.classList.add("hide");
+        const fadeDuration = this.app.state.animation.reducedMotion
+            ? 0
+            : Math.max(0, this.config.fadeDuration);
+        this.timer = setTimeout(() => this.complete(), fadeDuration);
     }
 
-    /* ======================================================
-       READY EVENT
-    ====================================================== */
-
-    dispatchReadyEvent() {
-
-        document.dispatchEvent(
-
-            new CustomEvent("lumiere:ready")
-
-        );
-
+    complete() {
+        this.state.finished = true;
+        this.state.animating = false;
+        this.app.state.app.loading = false;
+        this.app.state.app.ready = true;
+        this.hero?.classList.add("ready");
+        this.loader?.remove();
+        this.loader = null;
+        this.unlockScroll();
+        this.app.events.emit("loader:finished");
+        document.dispatchEvent(new CustomEvent("lumiere:ready"));
     }
-
-    /* ======================================================
-       SCROLL LOCK
-    ====================================================== */
 
     lockScroll() {
-
-        document.body.style.overflow = "hidden";
-
+        document.body.classList.add("loader-open");
     }
 
     unlockScroll() {
-
-        document.body.style.overflow = "";
-
+        document.body.classList.remove("loader-open");
     }
 
+    destroy() {
+        if (this.timer !== null) clearTimeout(this.timer);
+        this.unlockScroll();
+    }
 }

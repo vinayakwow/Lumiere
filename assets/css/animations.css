@@ -557,3 +557,50 @@
     }
 
 }
+
+/* Keep content visible when scripts are disabled or fail. */
+body:not(.animations-ready) [data-reveal],
+body:not(.animations-ready) .split-word {
+    opacity: 1;
+    transform: none;
+}
+
+body:not(.animations-ready) .image-reveal {
+    clip-path: none;
+}
+
+body.animations-ready [data-reveal]:not(.active) {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+body.animations-ready [data-reveal].active {
+    opacity: 1;
+    transform: none;
+}
+
+.split-word {
+    transform: none;
+    opacity: 1;
+    will-change: auto;
+}
+
+body.animations-ready .split-word:not(.show) {
+    transform: translateY(110%);
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.split-word.show {
+    transform: none;
+    opacity: 1;
+    transition: transform .65s cubic-bezier(.22,1,.36,1), opacity .65s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .split-word,
+    body.animations-ready .split-word:not(.show) {
+        transform: none;
+        opacity: 1;
+    }
+}

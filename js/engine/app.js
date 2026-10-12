@@ -23,6 +23,7 @@ import Reservation from "../modules/reservation.js";
 import Scroll from "../modules/scroll.js";
 import Animations from "../modules/animations.js";
 import Particles from "../modules/particles.js";
+import Newsletter from "../modules/newsletter.js";
 
 export default class App {
 
@@ -56,7 +57,7 @@ export default class App {
 
         this.registerModules();
 
-        await this.registerAssets();
+        // Page media loads directly from its semantic HTML elements.
 
         await this.modules.init();
 
@@ -182,6 +183,16 @@ export default class App {
 
         });
 
+        this.modules.register({
+
+            id: "newsletter",
+
+            priority: 10,
+
+            module: new Newsletter()
+
+        });
+
     }
 
     /* ======================================================
@@ -199,12 +210,13 @@ export default class App {
 
             {
                 type: "image",
-                src: "assets/images/chef.webp"
+                src: "assets/images/chef.jpg"
             },
 
             {
                 type: "font",
-                src: "Cormorant Garamond"
+                src: "Cormorant Garamond",
+                font: '1rem "Cormorant Garamond"'
             }
 
         ]);

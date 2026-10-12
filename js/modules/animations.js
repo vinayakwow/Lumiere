@@ -1,399 +1,183 @@
-/**
- * ==========================================================
- * LUMIÈRE
- * Animation Engine
- * ==========================================================
- *
- * Responsibilities
- * ----------------
- * ✓ Reveal sections
- * ✓ Split text
- * ✓ Stagger animations
- * ✓ Counters
- * ✓ Image reveals
- * ✓ Scroll progress
- * ✓ Observer lifecycle
- *
- * ==========================================================
- */
-
 import createObserver from "../utils/observer.js";
 import splitText from "../utils/splitText.js";
 
 export default class Animations {
-
     constructor(app) {
-
         this.app = app;
-
-        this.events = app.events;
-
         this.state = app.state;
-
         this.config = app.config.animation;
-
         this.observer = null;
-
         this.progressBar = null;
-
+        this.sections = [];
         this.revealElements = [];
-
         this.counterElements = [];
-
         this.splitElements = [];
-
-        this.imageRevealElements = [];
-
+        this.timers = new Set();
+        this.frames = new Set();
     }
-
-    /* ======================================================
-       INIT
-    ====================================================== */
 
     init() {
-
         this.cacheDOM();
-
         this.prepareSplitText();
 
+        if (
+            this.state.animation.reducedMotion ||
+            !("IntersectionObserver" in window)
+        ) {
+            this.revealAll();
+            return;
+        }
+
         this.createObserver();
-
         this.observeElements();
-
-        this.events.on(
-
-            "loader:finished",
-
-            () => this.start(),
-
-            100
-
-        );
-
+        this.start();
     }
-
-    /* ======================================================
-       CACHE
-    ====================================================== */
 
     cacheDOM() {
-
-        this.progressBar = document.querySelector(
-
-            ".scroll-progress"
-
-        );
-
+        this.progressBar = document.querySelector(".scroll-progress-bar");
+        this.sections = [
+            ...document.querySelectorAll("section.section, footer.footer")
+        ];
         this.revealElements = [
-
             ...document.querySelectorAll(
-
-                "[data-reveal]"
-
+                ".reveal, .reveal-left, .reveal-right, [data-reveal], .image-reveal"
             )
-
         ];
-
         this.counterElements = [
-
-            ...document.querySelectorAll(
-
-                "[data-counter]"
-
-            )
-
+            ...document.querySelectorAll("[data-counter]")
         ];
-
         this.splitElements = [
-
-            ...document.querySelectorAll(
-
-                "[data-split]"
-
-            )
-
+            ...document.querySelectorAll(".split, [data-split]")
         ];
-
-        this.imageRevealElements = [
-
-            ...document.querySelectorAll(
-
-                ".image-reveal"
-
-            )
-
-        ];
-
     }
-
-    /* ======================================================
-       SPLIT TEXT
-    ====================================================== */
 
     prepareSplitText() {
-
         this.splitElements.forEach(element => {
-
+            if (element.dataset.splitReady === "true") return;
             splitText(element);
-
+            element.dataset.splitReady = "true";
         });
-
     }
 
-    /* ======================================================
-       OBSERVER
-    ====================================================== */
-
     createObserver() {
-
         this.observer = createObserver({
-
-            threshold: .18,
-
-            rootMargin: "0px 0px -10% 0px",
-
+            threshold: 0.12,
+            rootMargin: "0px 0px -8% 0px",
             callback: entries => {
-
                 entries.forEach(entry => {
-
                     if (!entry.isIntersecting) return;
-
                     this.reveal(entry.target);
-
                     this.observer.unobserve(entry.target);
-
                 });
-
             }
-
         });
-
     }
 
     observeElements() {
-
-        [
-
+        const targets = new Set([
+            ...this.sections,
             ...this.revealElements,
-
             ...this.counterElements,
-
-            ...this.imageRevealElements,
-
             ...this.splitElements
+        ]);
 
-        ]
-
-        .forEach(element => {
-
-            this.observer.observe(element);
-
-        });
-
+        targets.forEach(element => this.observer.observe(element));
+        this.start();
     }
-
-    /* ======================================================
-       START
-    ====================================================== */
 
     start() {
-
-        document.body.classList.add(
-
-            "animations-ready"
-
-        );
-
+        document.body.classList.add("animations-ready");
     }
 
-    /* ======================================================
-       REVEAL
-    ====================================================== */
+    revealAll() {
+        const targets = new Set([
+            ...this.sections,
+            ...this.revealElements,
+            ...this.counterElements,
+            ...this.splitElements
+        ]);
+
+        targets.forEach(element => {
+            element.classList.add("active");
+            element.querySelectorAll(".split-word").forEach(word => {
+                word.classList.add("show");
+            });
+            if (element.dataset.counter !== undefined) {
+                element.textContent = element.dataset.counter;
+            }
+        });
+        this.start();
+    }
 
     reveal(element) {
+        element.classList.add("active");
 
-        element.classList.add("show");
-
-        if (
-
-            element.dataset.counter !== undefined
-
-        ) {
-
+        if (element.dataset.counter !== undefined) {
             this.animateCounter(element);
-
         }
 
         if (
-
-            element.dataset.split !== undefined
-
+            element.matches(".split, [data-split]") &&
+            !this.state.animation.reducedMotion
         ) {
-
             this.animateSplit(element);
-
         }
 
-        if (
-
-            element.classList.contains(
-
-                "image-reveal"
-
-            )
-
-        ) {
-
+        if (element.classList.contains("image-reveal")) {
             element.classList.add("show");
-
         }
-
-        this.events.emit(
-
-            "animation:revealed",
-
-            {
-
-                element
-
-            }
-
-        );
-
     }
-
-    /* ======================================================
-       COUNTER
-    ====================================================== */
 
     animateCounter(element) {
+        const end = Number(element.dataset.counter);
+        if (!Number.isFinite(end)) return;
 
-        const end = Number(
-
-            element.dataset.counter
-
-        );
-
-        const duration =
-
-            this.config.counterSpeed;
-
+        const duration = Math.max(1, this.config.counterSpeed);
         const start = performance.now();
+        let frame = 0;
 
         const update = time => {
-
-            const progress = Math.min(
-
-                (time - start) / duration,
-
-                1
-
-            );
-
-            const value = Math.floor(
-
-                end * progress
-
-            );
-
-            element.textContent = value;
-
+            const progress = Math.min((time - start) / duration, 1);
+            element.textContent = String(Math.floor(end * progress));
             if (progress < 1) {
-
-                requestAnimationFrame(update);
-
+                frame = requestAnimationFrame(update);
+                this.frames.add(frame);
+            } else {
+                element.textContent = String(end);
+                this.frames.delete(frame);
             }
-
-            else {
-
-                element.textContent = end;
-
-            }
-
         };
 
-        requestAnimationFrame(update);
-
+        frame = requestAnimationFrame(update);
+        this.frames.add(frame);
     }
-
-    /* ======================================================
-       SPLIT
-    ====================================================== */
 
     animateSplit(element) {
-
-        const words =
-
-            element.querySelectorAll(
-
-                ".split-word"
-
-            );
-
-        words.forEach(
-
-            (word, index) => {
-
-                setTimeout(() => {
-
-                    word.classList.add(
-
-                        "show"
-
-                    );
-
-                },
-
-                index *
-
-                this.config.splitDelay
-
-                );
-
-            }
-
-        );
-
+        const delay = Math.max(0, this.config.splitDelay);
+        element.querySelectorAll(".split-word").forEach((word, index) => {
+            const timer = setTimeout(() => {
+                word.classList.add("show");
+                this.timers.delete(timer);
+            }, index * delay);
+            this.timers.add(timer);
+        });
     }
-
-    /* ======================================================
-       UPDATE
-    ====================================================== */
 
     update() {
-
         if (!this.progressBar) return;
-
-        const scrollTop =
-
-            window.scrollY;
-
-        const height =
-
-            document.documentElement
-
-            .scrollHeight -
-
-            window.innerHeight;
-
-        const progress =
-
-            scrollTop / height;
-
-        this.progressBar.style.transform =
-
-            `scaleX(${progress})`;
-
+        const scrollableHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0
+            ? Math.min(1, Math.max(0, window.scrollY / scrollableHeight))
+            : 0;
+        this.progressBar.style.transform = "scaleX(" + progress + ")";
     }
-
-    /* ======================================================
-       DESTROY
-    ====================================================== */
 
     destroy() {
-
         this.observer?.disconnect();
-
+        this.timers.forEach(timer => clearTimeout(timer));
+        this.frames.forEach(frame => cancelAnimationFrame(frame));
+        this.timers.clear();
+        this.frames.clear();
     }
-
 }

@@ -1,307 +1,210 @@
-/**
- * ==========================================================
- * LUMIÈRE
- * Navbar Module
- * ==========================================================
- */
-
 import throttle from "../utils/throttle.js";
 
 export default class Navbar {
-
     constructor(app) {
-
         this.app = app;
-
         this.config = app.config.navbar;
         this.state = app.state.navbar;
-
         this.navbar = null;
-        this.links = [];
+        this.menu = null;
         this.toggle = null;
-        this.lastScroll = 0;
+        this.links = [];
         this.sections = [];
-
-        this.ticking = false;
-
+        this.observer = null;
+        this.lastScroll = window.scrollY;
+        this.handleScrollThrottled = throttle(() => this.onScroll(), 16);
     }
 
-    /* ======================================================
-       INIT
-    ====================================================== */
-
     init() {
-
         this.cacheDOM();
-
         if (!this.navbar) return;
 
         this.collectSections();
-
         this.bindEvents();
-
         this.observeSections();
-
+        this.onScroll();
     }
-
-    /* ======================================================
-       CACHE
-    ====================================================== */
 
     cacheDOM() {
-
         this.navbar = document.querySelector(".navbar");
-
-        this.links = [...document.querySelectorAll(".nav-links a")];
-
-        this.toggle = document.querySelector(".menu-toggle");
-
+        this.menu = document.querySelector(".mobile-menu");
+        this.toggle = document.querySelector(".mobile-toggle");
+        this.links = [
+            ...document.querySelectorAll(".desktop-nav a, .mobile-menu a")
+        ];
     }
-
-    /* ======================================================
-       SECTIONS
-    ====================================================== */
 
     collectSections() {
-
-        this.sections = this.links
-            .map(link => {
-
-                const id = link.getAttribute("href");
-
-                return document.querySelector(id);
-
-            })
+        const sectionIds = new Set(
+            this.links
+                .map(link => link.getAttribute("href"))
+                .filter(href => href && href.startsWith("#"))
+        );
+        this.sections = [...sectionIds]
+            .map(id => document.getElementById(id.slice(1)))
             .filter(Boolean);
-
     }
-
-    /* ======================================================
-       EVENTS
-    ====================================================== */
 
     bindEvents() {
-
-        window.addEventListener(
-            "scroll",
-            throttle(() => this.onScroll(), 16)
-        );
-
-        this.toggle?.addEventListener(
-            "click",
-            () => this.toggleMenu()
-        );
-
-        this.links.forEach(link => {
-
-            link.addEventListener("click", e => {
-
-                this.navigate(e, link);
-
-            });
-
+        window.addEventListener("scroll", this.handleScrollThrottled, {
+            passive: true
         });
-
+        this.toggle?.addEventListener("click", this.handleToggle);
+        this.links.forEach(link => {
+            link.addEventListener("click", this.handleLinkClick);
+        });
+        document.addEventListener("keydown", this.handleKeydown);
+        document.addEventListener("click", this.handleDocumentClick);
     }
 
-    /* ======================================================
-       SCROLL
-    ====================================================== */
-
-    onScroll() {
-
-        const current = window.scrollY;
-
-        this.toggleScrolledState(current);
-
-        this.handleVisibility(current);
-
-    }
-
-    /* ======================================================
-       GLASS EFFECT
-    ====================================================== */
-
-    toggleScrolledState(scrollY) {
-
-        const active =
-            scrollY > this.config.scrollOffset;
-
-        this.navbar.classList.toggle(
-            "scrolled",
-            active
-        );
-
-        this.state.scrolled = active;
-
-    }
-
-    /* ======================================================
-       AUTO HIDE
-    ====================================================== */
-
-    handleVisibility(scrollY) {
-
-        if (window.innerWidth <= 992) {
-
-            this.lastScroll = scrollY;
-
-            return;
-
+    handleToggle = () => {
+        if (this.state.open) {
+            this.closeMenu(true);
+        } else {
+            this.openMenu();
         }
+    };
 
-        if (
+    handleLinkClick = event => {
+        const link = event.currentTarget;
+        const href = link.getAttribute("href");
+        const target = href?.startsWith("#")
+            ? document.getElementById(href.slice(1))
+            : null;
 
-            scrollY >
-            this.lastScroll + this.config.hideOffset
-
-        ) {
-
-            this.navbar.style.transform =
-                "translateY(-140%)";
-
-            this.state.hidden = true;
-
-        }
-
-        else if (
-
-            scrollY <
-            this.lastScroll - this.config.hideOffset
-
-        ) {
-
-            this.navbar.style.transform =
-                "";
-
-            this.state.hidden = false;
-
-        }
-
-        this.lastScroll = scrollY;
-
-    }
-
-    /* ======================================================
-       MENU
-    ====================================================== */
-
-    toggleMenu() {
-
-        this.state.open = !this.state.open;
-
-        this.toggle.classList.toggle(
-            "active",
-            this.state.open
-        );
-
-        document
-            .querySelector(".nav-links")
-            ?.classList.toggle(
-                "open",
-                this.state.open
-            );
-
-    }
-
-    closeMenu() {
-
-        this.state.open = false;
-
-        this.toggle?.classList.remove("active");
-
-        document
-            .querySelector(".nav-links")
-            ?.classList.remove("open");
-
-    }
-
-    /* ======================================================
-       NAVIGATION
-    ====================================================== */
-
-    navigate(event, link) {
-
-        event.preventDefault();
-
-        const target = document.querySelector(
-
-            link.getAttribute("href")
-
-        );
-
+        this.closeMenu(false);
         if (!target) return;
 
-        this.closeMenu();
+        event.preventDefault();
+        const destination = new URL(link.href);
+        if (window.location.href !== destination.href) {
+            window.history.pushState(null, "", destination);
+        }
 
         target.scrollIntoView({
-
-            behavior: "smooth",
-
+            behavior: this.app.state.animation.reducedMotion ? "auto" : "smooth",
             block: "start"
-
         });
+        if (!target.hasAttribute("tabindex")) {
+            target.setAttribute("tabindex", "-1");
+        }
+        target.focus({ preventScroll: true });
+        this.setActive(target.id);
+    };
 
+    handleDocumentClick = event => {
+        if (!this.state.open) return;
+        if (this.navbar?.contains(event.target) || this.menu?.contains(event.target)) {
+            return;
+        }
+        this.closeMenu(false);
+    };
+
+    handleKeydown = event => {
+        if (!this.state.open) return;
+
+        if (event.key === "Escape") {
+            event.preventDefault();
+            this.closeMenu(true);
+            return;
+        }
+
+        if (event.key !== "Tab" || !this.menu) return;
+        const focusable = [...this.menu.querySelectorAll('a[href]:not([tabindex="-1"])')];
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    };
+
+    openMenu() {
+        if (!this.menu || !this.toggle) return;
+        this.state.open = true;
+        this.toggle.classList.add("active");
+        this.toggle.setAttribute("aria-expanded", "true");
+        this.menu.classList.add("open");
+        this.menu.setAttribute("aria-hidden", "false");
+        this.menu.removeAttribute("inert");
+        document.body.classList.add("nav-open");
+        this.menu.querySelector("a[href]")?.focus();
     }
 
-    /* ======================================================
-       ACTIVE LINKS
-    ====================================================== */
+    closeMenu(restoreFocus = false) {
+        this.state.open = false;
+        this.toggle?.classList.remove("active");
+        this.toggle?.setAttribute("aria-expanded", "false");
+        this.menu?.classList.remove("open");
+        this.menu?.setAttribute("aria-hidden", "true");
+        this.menu?.setAttribute("inert", "");
+        document.body.classList.remove("nav-open");
 
-    observeSections() {
+        if (restoreFocus) this.toggle?.focus();
+    }
 
-        const observer = new IntersectionObserver(
-
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (!entry.isIntersecting) return;
-
-                    const id = entry.target.id;
-
-                    this.setActive(id);
-
-                });
-
-            },
-
-            {
-
-                threshold: .45
-
-            }
-
+    onScroll() {
+        const current = window.scrollY;
+        this.navbar?.classList.toggle(
+            "scrolled",
+            current > this.config.scrollOffset
         );
 
-        this.sections.forEach(section => {
+        if (window.innerWidth <= 960) {
+            this.navbar.style.transform = "";
+            this.lastScroll = current;
+            return;
+        }
 
-            observer.observe(section);
+        if (current < this.config.scrollOffset) {
+            this.navbar.style.transform = "";
+        } else if (current > this.lastScroll + this.config.hideOffset) {
+            this.navbar.style.transform = "translateY(-140%)";
+        } else if (current < this.lastScroll - this.config.hideOffset) {
+            this.navbar.style.transform = "";
+        }
 
+        this.lastScroll = current;
+    }
+
+    observeSections() {
+        if (!("IntersectionObserver" in window)) return;
+        this.observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) this.setActive(entry.target.id);
+            });
+        }, {
+            rootMargin: "-10% 0px -25% 0px",
+            threshold: 0.1
         });
 
+        this.sections.forEach(section => this.observer.observe(section));
     }
 
     setActive(id) {
-
         this.links.forEach(link => {
-
-            const active =
-
-                link.getAttribute("href") === `#${id}`;
-
-            link.classList.toggle(
-
-                "active",
-
-                active
-
-            );
-
+            const active = link.getAttribute("href") === "#" + id;
+            link.classList.toggle("active", active);
+            if (active) link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
         });
-
         this.state.activeLink = id;
-
     }
 
+    destroy() {
+        window.removeEventListener("scroll", this.handleScrollThrottled);
+        this.toggle?.removeEventListener("click", this.handleToggle);
+        this.links.forEach(link => {
+            link.removeEventListener("click", this.handleLinkClick);
+        });
+        document.removeEventListener("keydown", this.handleKeydown);
+        document.removeEventListener("click", this.handleDocumentClick);
+        this.observer?.disconnect();
+        this.closeMenu(false);
+    }
 }

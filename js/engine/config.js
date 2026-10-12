@@ -30,8 +30,8 @@ export default class Config {
 
         this.loader = {
 
-            duration: 2600,
-            fadeDuration: 1000,
+            duration: 700,
+            fadeDuration: 500,
 
         };
 

@@ -484,3 +484,132 @@
     }
 
 }
+
+/* Current hero markup */
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: clamp(7rem, 16vh, 10rem) 1.25rem 6rem;
+    isolation: isolate;
+    background: #100f0c;
+}
+
+.hero-video {
+    z-index: -3;
+}
+
+.hero-overlay,
+.hero-gradient,
+.hero-noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.hero-overlay {
+    z-index: -2;
+    background: linear-gradient(180deg, rgba(0,0,0,.64), rgba(0,0,0,.38) 52%, rgba(0,0,0,.74));
+}
+
+.hero-gradient {
+    z-index: -1;
+    background: radial-gradient(ellipse at 50% 45%, transparent 20%, rgba(0,0,0,.3) 82%);
+}
+
+.hero-noise {
+    z-index: 0;
+    opacity: .035;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px);
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: min(100%, 75rem);
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.hero p.hero-subtitle {
+    max-width: 100%;
+    margin: 0 0 clamp(1rem, 3vh, 2rem);
+    color: var(--color-primary-light);
+    font-size: clamp(.65rem, 1.1vw, .82rem);
+    letter-spacing: clamp(.08em, .28vw, .25em);
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.hero h1.hero-title {
+    max-width: 15ch;
+    margin: 0 auto 1.25rem;
+    color: #fff;
+    font-size: clamp(2.45rem, 8vw, 7.5rem);
+    line-height: .94;
+    text-wrap: balance;
+    text-shadow: 0 12px 45px rgba(0,0,0,.35);
+}
+
+.hero h1.hero-title span {
+    display: block;
+    color: var(--color-primary-light);
+}
+
+.hero p.hero-description {
+    max-width: 42rem;
+    margin: 0 auto clamp(1.5rem, 4vh, 2.5rem);
+    color: rgba(255,255,255,.82);
+    font-size: clamp(.98rem, 1.4vw, 1.15rem);
+    line-height: 1.8;
+}
+
+.hero-scroll {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    z-index: 2;
+    display: grid;
+    justify-items: center;
+    gap: .5rem;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.72);
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 2rem;
+    background: linear-gradient(var(--color-primary), transparent);
+}
+
+@media (max-width: 640px) {
+    .hero {
+        padding-inline: 1rem;
+    }
+
+    .hero-scroll {
+        bottom: 1rem;
+    }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+    .hero {
+        min-height: 38rem;
+        padding-block: 7rem 5rem;
+    }
+
+    .hero-scroll {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-video {
+        display: none;
+    }
+}

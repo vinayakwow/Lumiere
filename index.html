@@ -16,6 +16,8 @@ LUMIÈRE —
 Where Every Meal Becomes A Memory
 </title>
 
+<link rel="canonical" href="https://vinayakwow.github.io/lumiere/">
+
 <meta
 name="description"
 content="An immersive luxury fine dining experience inspired by modern gastronomy, timeless elegance and unforgettable evenings.">
@@ -43,11 +45,11 @@ content="Where Every Meal Becomes A Memory.">
 
 <meta
 property="og:image"
-content="assets/images/og.jpg">
+content="https://vinayakwow.github.io/lumiere/assets/images/og.jpg">
 
 <meta
 property="og:url"
-content="https://lumiere.com">
+content="https://vinayakwow.github.io/lumiere/">
 
 <meta
 name="twitter:card"
@@ -63,7 +65,7 @@ content="Luxury Fine Dining Experience.">
 
 <meta
 name="twitter:image"
-content="assets/images/og.jpg">
+content="https://vinayakwow.github.io/lumiere/assets/images/og.jpg">
 
 <link
 rel="icon"
@@ -102,6 +104,7 @@ rel="stylesheet">
 <link rel="stylesheet" href="assets/css/footer.css">
 <link rel="stylesheet" href="assets/css/animations.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/site-components.css">
 
 <script type="application/ld+json">
 
@@ -109,7 +112,7 @@ rel="stylesheet">
 "@context":"https://schema.org",
 "@type":"Restaurant",
 "name":"LUMIÈRE",
-"url":"https://lumiere.com",
+"url":"https://vinayakwow.github.io/lumiere/",
 "telephone":"+1-555-000-0000",
 "servesCuisine":[
 "French",
@@ -118,7 +121,7 @@ rel="stylesheet">
 ],
 "priceRange":"$$$$",
 "acceptsReservations":"True",
-"image":"assets/images/og.jpg",
+"image":"https://vinayakwow.github.io/lumiere/assets/images/og.jpg",
 "address":{
 "@type":"PostalAddress",
 "streetAddress":"Luxury Avenue",
@@ -133,13 +136,13 @@ rel="stylesheet">
 
 <body>
 
-<div class="page-transition"></div>
+<div class="page-transition" aria-hidden="true"></div>
 
-<div class="cursor"></div>
+<div class="cursor" aria-hidden="true"></div>
 
-<div class="cursor-dot"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
 
-<div class="scroll-progress">
+<div class="scroll-progress" aria-hidden="true">
 
 <div class="scroll-progress-bar"></div>
 
@@ -237,7 +240,10 @@ Contact
 
 <button
 class="mobile-toggle"
-aria-label="Open Navigation">
+type="button"
+aria-label="Open navigation"
+aria-controls="mobile-menu"
+aria-expanded="false">
 
 <span></span>
 
@@ -249,9 +255,9 @@ aria-label="Open Navigation">
 
 </header>
 
-<div class="mobile-menu">
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
 
-<nav>
+<nav aria-label="Mobile navigation">
 
 <ul>
 
@@ -286,7 +292,7 @@ class="hero-video"
 autoplay
 muted
 loop
-playsinline>
+playsinline aria-hidden="true" tabindex="-1">
 
 <source
 src="assets/videos/hero.mp4"
@@ -612,7 +618,7 @@ They create memories.
 id="experience"
 class="experience">
 
-<div class="experience-video">
+<div class="experience-video" aria-hidden="true">
 
 <video
 autoplay
@@ -1047,6 +1053,8 @@ Book The Tasting Experience
 
 </div>
 
+</div>
+
 </section>
 
 <!-- ========================================================= -->
@@ -1113,7 +1121,7 @@ to elevate every course.
 <div class="wine-image reveal">
 
 <img
-src="assets/images/wine.jpg"
+src="assets/images/gallery-05.jpg"
 loading="lazy"
 alt="Luxury Wine Cellar">
 
@@ -1351,7 +1359,7 @@ Your Breath Away.
     <figure class="gallery-card gallery-large reveal">
 
         <img
-            src="assets/images/gallery/gallery-01.jpg"
+            src="assets/images/gallery-01.jpg"
             alt="Private Dining Hall"
             loading="lazy">
 
@@ -1366,7 +1374,7 @@ Your Breath Away.
     <figure class="gallery-card reveal">
 
         <img
-            src="assets/images/gallery/gallery-02.jpg"
+            src="assets/images/gallery-02.jpg"
             alt="Signature Dish"
             loading="lazy">
 
@@ -1381,7 +1389,7 @@ Your Breath Away.
     <figure class="gallery-card reveal">
 
         <img
-            src="assets/images/gallery/gallery-03.jpg"
+            src="assets/images/gallery-03.jpg"
             alt="Luxury Interior"
             loading="lazy">
 
@@ -1396,7 +1404,7 @@ Your Breath Away.
     <figure class="gallery-card reveal">
 
         <img
-            src="assets/images/gallery/gallery-04.jpg"
+            src="assets/images/gallery-04.jpg"
             alt="Chef Preparing Dish"
             loading="lazy">
 
@@ -1411,7 +1419,7 @@ Your Breath Away.
     <figure class="gallery-card gallery-wide reveal">
 
         <img
-            src="assets/images/gallery/gallery-05.jpg"
+            src="assets/images/gallery-05.jpg"
             alt="Wine Collection"
             loading="lazy">
 
@@ -1426,7 +1434,7 @@ Your Breath Away.
     <figure class="gallery-card reveal">
 
         <img
-            src="assets/images/gallery/gallery-06.jpg"
+            src="assets/images/gallery-06.jpg"
             alt="Dessert"
             loading="lazy">
 
@@ -1437,6 +1445,8 @@ Your Breath Away.
         </figcaption>
 
     </figure>
+
+</div>
 
 </div>
 
@@ -1675,13 +1685,13 @@ Five Diamond Restaurant
 <section
 class="ambient-banner">
 
-<div class="ambient-overlay"></div>
+<div class="ambient-overlay" aria-hidden="true"></div>
 
 <video
 autoplay
 muted
 loop
-playsinline>
+playsinline aria-hidden="true" tabindex="-1">
 
 <source
 src="assets/videos/fire.mp4"
@@ -1753,9 +1763,10 @@ Reservations are highly recommended.
 
 <div class="reservation-form">
 
-  <form
-class="booking-form"
-action="#"
+  <p class="form-note" id="reservation-note">Online reservations are not connected on this site yet. Details entered here will not be sent.</p>
+
+
+<form class="booking-form" action="#"
 method="post"
 autocomplete="on">
 
@@ -1859,6 +1870,7 @@ Date
 <input
 type="date"
 id="reservation-date"
+name="date"
 required>
 
 </div>
@@ -1874,6 +1886,7 @@ Time
 <input
 type="time"
 id="reservation-time"
+name="time"
 required>
 
 </div>
@@ -1890,6 +1903,7 @@ Special Requests
 
 <textarea
 id="reservation-message"
+name="message"
 rows="6"
 placeholder="Allergies, celebration, seating preferences..."></textarea>
 
@@ -1897,11 +1911,13 @@ placeholder="Allergies, celebration, seating preferences..."></textarea>
 
 <button
 class="btn btn-primary"
-type="submit">
+type="submit" disabled aria-describedby="reservation-note">
 
 Reserve Your Table
 
 </button>
+
+<p class="form-status reservation-status" id="reservation-status" role="status" aria-live="polite" hidden></p>
 
 </form>
 
@@ -2163,22 +2179,30 @@ and seasonal experiences.
 
 </p>
 
-<form class="newsletter-form">
+<p class="form-note">This newsletter form is not connected yet. Your email will not be sent.</p>
+
+<form class="newsletter-form" method="post">
+
+<label class="sr-only" for="newsletter-email">Email address</label>
 
 <input
 type="email"
+ id="newsletter-email"
+ name="email"
 placeholder="Email Address"
 required>
 
 <button
 type="submit"
-class="btn btn-secondary">
+class="btn btn-secondary" disabled>
 
 Subscribe
 
 </button>
 
 </form>
+
+<p class="form-status newsletter-status" id="newsletter-status" role="status" aria-live="polite" hidden></p>
 
 </div>
 
@@ -2213,25 +2237,11 @@ LUMIÈRE
 
 <ul class="contact-list">
 
-<li>
+<li>Luxury Avenue, Paris, France</li>
 
-Luxury Avenue,
-Paris,
-France
+<li><a href="tel:+15550000000">+1 (555) 000-0000</a></li>
 
-</li>
-
-<li>
-
-+1 (555) 000-0000
-
-</li>
-
-<li>
-
-reservations@lumiere.com
-
-</li>
+<li><a href="mailto:reservations@lumiere.com">reservations@lumiere.com</a></li>
 
 <li>
 
@@ -2247,10 +2257,10 @@ Monday – Sunday
 
 <div class="contact-map">
 
-<div id="map">
-
-Map Placeholder
-
+<div id="map" role="img" aria-label="LUMIÈRE, Luxury Avenue, Paris, France">
+<span class="map-kicker">A dining destination</span>
+<strong>LUMIÈRE</strong>
+<span>Luxury Avenue · Paris</span>
 </div>
 
 </div>
